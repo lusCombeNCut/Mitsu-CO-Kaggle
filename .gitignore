@@ -1,6 +1,7 @@
 # Generated output folders
 figures/
 evaluation_results/
+**/__pycache__/
 
 # Model files
 models/
