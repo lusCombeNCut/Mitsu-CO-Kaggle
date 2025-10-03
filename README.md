@@ -126,14 +126,14 @@ python run_mini_trainer.py --n-features 10 --n-targets 424 --time-fraction 0.1 -
 python run_mini_trainer.py --n-features 20 --n-targets 424 --train-size 0.9
 ```
 
-## 📈 Performance
+## Performance
 
 - **Training Speed**: ~54s for 424 targets with 10% data
 - **Memory Efficient**: Processes large datasets incrementally  
 - **Correlation Range**: Achieving correlations from -0.76 to +0.68
 - **Competition Metric**: Real Kaggle scoring implementation
 
-## 🛠️ Requirements
+## Requirements
 
 See `requirements.txt` for full dependencies. Key packages:
 - `xgboost >= 2.0`
@@ -143,7 +143,7 @@ See `requirements.txt` for full dependencies. Key packages:
 - `matplotlib >= 3.7`
 - `scipy >= 1.10`
 
-## 📝 Development
+## Development
 
 The project follows a clean architecture pattern:
 - **src/**: Core business logic and models
