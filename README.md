@@ -1,102 +1,117 @@
 # Mitsui & Co. Commodity Prediction Challenge
 
-A streamlined machine learning solution for commodity price prediction using XGBoost models. This project implements competition-grade metrics, hardware acceleration, and integrated analysis in a clean, simplified architecture.
+A streamlined machine learning solution for commodity price prediction using LSTM and XGBoost models. This project implements competition-grade metrics, hardware acceleration, and integrated analysis in a clean, simplified architecture.
 
-## 🏗️ Project Structure (Simplified)
+## Project Structure
 
 ```
 Mitsu&Co/
-├── train_model.py                # 🎯 MAIN TRAINING SCRIPT - Run this to train models
-├── src/                          # Core modules
-│   ├── train.py                  # TRUE multi-target XGBoost (single model for all targets)
-│   └── individual_models_legacy.py # Legacy approach (424 separate models - NOT recommended)
-├── utils/                        # Utility functions and helpers
-│   ├── feature_engineering.py    # Feature creation and transformation
-│   ├── kaggle_score_calculator.py # Competition scoring utilities
-│   ├── time_series_cv.py         # Cross-validation utilities
-│   └── xgboost_ranker.py         # XGBoost ranking utilities
-├── tests/                        # Test suite and examples
-├── docs/                         # Documentation
-├── models/                       # Saved model artifacts
-├── outputs/                      # Generated plots, logs, results
-└── mitsui-commodity-prediction-challenge/  # Raw data
+├── src/                         # Core modules
+│   ├── train_LSTM.py           # Deep Learning LSTM approach
+│   ├── train_XGBoost.py        # Gradient Boosting approach
+│   └── train.py                # Training utilities and shared code
+├── utils/                       # Utility functions and helpers
+│   ├── competition_metrics.py   # Competition scoring utilities
+│   └── feature_engineering.py   # Feature creation and transformation
+├── tests/                       # Test suite
+├── docs/                        # Documentation
+├── models/                      # Saved model artifacts
+├── figures/                     # Generated visualizations
+└── evaluation_results/          # Competition evaluation results
 ```
 
-## 🚀 Quick Start (Simplified Commands)
+## Quick Start
 
-### Main Training Script (All-in-One Solution)
+### LSTM Training
 
-#### 🚀 Production Training (Recommended)
+```bash
+# Quick test with small subset
+python src/train_LSTM.py --n-targets 10 --epochs 5 --num-layers 2 --lstm-units 32
+
+# Production training (all targets)
+python src/train_LSTM.py --n-targets 424 --epochs 100 --num-layers 4 --deep-fc --disable-early-stopping --lstm-units 192
+```
+
+### XGBoost Training
+
 ```bash
 # Quick prototyping with competition analysis
-python train_model.py --n-features 20 --n-targets 10 --time-fraction 0.2
+python src/train_XGBoost.py --n-features 20 --n-targets 10 --time-fraction 0.2
 
-# Medium scale training with full analysis  
-python train_model.py --n-features 100 --n-targets 200 --time-fraction 0.5
-
-# Full scale training (all features and targets) - DEFAULT
-python train_model.py
-
-# Quick test with small subset
-python train_model.py --time-fraction 0.1 --n-features 10 --n-targets 5
+# Full scale training (all features and targets)
+python src/train_XGBoost.py
 ```
 
-#### 📊 Multi-Target Training (Alternative for Experimentation)
+## Key Features
+
+### LSTM Model (`train_LSTM.py`)
+- Multi-target deep learning approach
+- Configurable architecture (layers, units, sequence length)
+- Advanced feature engineering
+- Comprehensive visualization system
+- Early stopping and model checkpointing
+- Test dataset evaluation
+
+### XGBoost Model (`train_XGBoost.py`)
+- Gradient boosting approach
+- Feature importance analysis
+- Hardware acceleration (GPU/CPU)
+- Automated feature engineering
+- Model persistence and evaluation
+
+### Competition Integration
+- Spearman correlations with Sharpe-like scoring
+- Performance breakdown by correlation ranges
+- Model comparison and ranking
+- Proper train/validation splits
+
+## Data Overview
+
+- Training Data: 1,917 time periods × 370+ features × 424 targets
+- Test Data: 90 time periods for final predictions
+- Competition Metric: mean(daily_spearman_correlations) / std(daily_spearman_correlations)
+- Type: Time series commodity price data
+
+## Configuration
+
+### LSTM Parameters
 ```bash
-# Fast prototyping with unified model approach
-python run_multi_target_trainer.py --n-features 15 --n-targets 10 --time-fraction 0.3
-
-# Experimental multi-target approach
-python run_multi_target_trainer.py --n-features 30 --n-targets 100 --time-fraction 0.5
+--n-targets              # Number of targets to train (default: 424)
+--epochs                 # Training epochs (default: 100)
+--num-layers            # LSTM layers (default: 2)
+--lstm-units           # Units per layer (default: 64)
+--sequence-length      # Time steps to look back (default: 30)
+--deep-fc              # Use deep fully connected layers
+--disable-early-stopping # Train for full epochs
 ```
 
-## 📊 Key Features
-
-### 🎯 Main Training Engine (`train_model.py`)
-- **All-in-One Solution**: Training, scoring, and analysis in a single command
-- **Hardware Accelerated**: Auto-detects GPU/CPU configuration for optimal performance
-- **Integrated Analysis**: Built-in competition metrics and visualization
-- **Production Ready**: Default parameters optimized for full-scale training (370 features, 424 targets)
-- **Configurable**: Flexible parameters for development and testing
-
-### 🔧 Core Features
-- **XGBoost Models**: Individual optimized models per target
-- **Competition Scoring**: Integrated Kaggle-style Spearman correlation analysis  
-- **Hardware Optimization**: Auto GPU detection, CPU multi-threading
-- **Feature Engineering**: Automated lag features, rolling means, ratios
-- **Visualization**: Training results and feature importance plots
-- **Model Persistence**: Automatic model saving and loading
-
-### 🗂️ Legacy Code
-- **Legacy Individual Models**: Available in `individual_models_legacy.py`
-- **Old Architecture**: 424 separate XGBoost models (one per target)
-- **Not Recommended**: Much slower and less efficient than true multi-target approach
-
-### 📊 Competition Integration
-- **Real Kaggle Metrics**: Spearman correlations with Sharpe-like scoring
-- **Performance Breakdown**: Detailed analysis by correlation ranges
-- **Model Comparison**: Top performers identification and ranking
-- **Validation Focus**: Proper train/validation splits for evaluation
-
-## 💾 Data Overview
-
-- **Training Data**: 1,917 time periods × 370+ features × 424 targets
-- **Test Data**: Available for final predictions  
-- **Competition Metric**: `mean(daily_spearman_correlations) / std(daily_spearman_correlations)`
-- **Time Series**: Commodity price data with engineered features
-
-## 🔧 Configuration Options
-
-### Mini Trainer Parameters
+### XGBoost Parameters
 ```bash
---n-features      # Number of base features to use (default: 20)
---n-targets       # Number of targets to train (default: 3) 
---time-fraction   # Fraction of time series to use (default: 1.0)
---train-size      # Training/validation split (default: 0.8)
---no-plots        # Skip generating visualizations
+--n-features           # Number of base features (default: 370)
+--n-targets           # Number of targets (default: 424)
+--time-fraction       # Fraction of time series to use (default: 1.0)
+--train-size         # Training/validation split (default: 0.8)
 ```
 
-### Example Configurations
+## Getting Started
+
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. Run a test training:
+   ```bash
+   python src/train_LSTM.py --n-targets 10 --epochs 5
+   ```
+4. Check generated visualizations in `figures/` directory
+
+## Development
+
+- Use `src/train_LSTM.py` for deep learning approach
+- Use `src/train_XGBoost.py` for gradient boosting
+- Generated files (models, figures, results) are gitignored
+- Tests available in `tests/` directory
 ```bash
 # Quick test (5 features, 2 targets, 10% data) - Individual models
 python run_mini_trainer.py --n-features 5 --n-targets 2 --time-fraction 0.1
