@@ -1,0 +1,66 @@
+{
+  "total_time": 102.71785521507263,
+  "training_results": {
+    "n_targets_trained": 2,
+    "total_training_time": 3.233057737350464,
+    "average_spearman_correlation": 0.0,
+    "average_training_time_per_target": 1.5127462148666382,
+    "target_results": [
+      {
+        "target": "target_0",
+        "training_time": 2.476257562637329,
+        "validation_metrics": {
+          "spearman_correlation_mean": 0.0,
+          "spearman_correlation_std": 0.0,
+          "spearman_correlation_count": 0,
+          "ndcg_10_mean": 0.0,
+          "ndcg_10_std": 0.0,
+          "ndcg_10_count": 0,
+          "kendall_tau_mean": 0.0,
+          "kendall_tau_std": 0.0,
+          "kendall_tau_count": 0
+        },
+        "model_params": {
+          "max_depth": 6,
+          "eta": 0.1,
+          "subsample": 0.8,
+          "colsample_bytree": 0.8,
+          "min_child_weight": 5,
+          "n_estimators": 100,
+          "early_stopping_rounds": 20,
+          "random_state": 42
+        }
+      },
+      {
+        "target": "target_1",
+        "training_time": 0.5492348670959473,
+        "validation_metrics": {
+          "spearman_correlation_mean": 0.0,
+          "spearman_correlation_std": 0.0,
+          "spearman_correlation_count": 0,
+          "ndcg_10_mean": 0.0,
+          "ndcg_10_std": 0.0,
+          "ndcg_10_count": 0,
+          "kendall_tau_mean": 0.0,
+          "kendall_tau_std": 0.0,
+          "kendall_tau_count": 0
+        },
+        "model_params": {
+          "max_depth": 6,
+          "eta": 0.1,
+          "subsample": 0.8,
+          "colsample_bytree": 0.8,
+          "min_child_weight": 5,
+          "n_estimators": 100,
+          "early_stopping_rounds": 20,
+          "random_state": 42
+        }
+      }
+    ]
+  },
+  "models_trained": [
+    "target_0",
+    "target_1"
+  ],
+  "success": true
+}
