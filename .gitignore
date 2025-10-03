@@ -1,0 +1,58 @@
+# Generated output folders
+figures/
+evaluation_results/
+
+# Model files
+models/
+*.joblib
+*.pth
+*.pkl
+
+# Output files
+outputs/
+results/
+*.png
+*.jpg
+*.jpeg
+*.pdf
+
+# Python cache and bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environments
+.venv/
+.env
+venv/
+env/
+.conda/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# Data files (optional - uncomment if you want to exclude data)
+# *.csv
+# *.json
+# *.parquet
+
+# Test files
+test_*.png
+lstm_training_results.png
